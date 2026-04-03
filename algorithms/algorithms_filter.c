@@ -126,6 +126,40 @@ int16_t Arithmetic_Filter(int16_t new_sample)
 }
 
 
+/**
+ * 一阶低通滤波器（定点整数实现）
+ * @param new_sample  当前采样值
+ * @param alpha       滤波系数（0~256，实际系数 = alpha/256）
+ *                    值越小平滑越强，响应越慢；值越大响应越快。
+ * @return            滤波输出值
+ */
+int16_t LowPass_Filter(int16_t new_sample, uint16_t alpha)
+{
+    static int16_t last_output = 0;
+    // 使用 32 位中间变量防止溢出：output = (alpha * new + (256 - alpha) * last) / 256
+    int32_t output = (int32_t)alpha * new_sample + (int32_t)(256 - alpha) * last_output;
+    output = (output + 128) / 256;   // +128 实现四舍五入
+    last_output = (int16_t)output;
+    return last_output;
+}
 
+/**
+ * 一阶高通滤波器（定点整数实现）
+ * @param new_sample  当前采样值
+ * @param alpha       滤波系数（0~256，实际系数 = alpha/256）
+ *                    值越小高通截止频率越低，值越大高通越敏感。
+ * @return            高通滤波输出（信号中的高频分量）
+ */
+int16_t HighPass_Filter(int16_t new_sample, uint16_t alpha)
+{
+    static int16_t lowpass_last = 0;   // 存储低通滤波器的上一次输出
+    // 先计算低通输出
+    int32_t lowpass = (int32_t)alpha * new_sample + (int32_t)(256 - alpha) * lowpass_last;
+    lowpass = (lowpass + 128) / 256;
+    lowpass_last = (int16_t)lowpass;
+    // 高通 = 原始信号 - 低通信号
+    int16_t highpass = new_sample - (int16_t)lowpass;
+    return highpass;
+}
 
 
