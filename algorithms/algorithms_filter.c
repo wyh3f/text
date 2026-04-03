@@ -22,8 +22,7 @@ int16_t LimitChange_Filter(int16_t new_value, int16_t last_valid, int16_t max_ch
 }
 
 
-// 最大支持的窗口大小（根据内存调整）
-#define MEDIAN_MAX_WINDOW  15
+
 
 /**
  * 中位值滤波
@@ -95,8 +94,7 @@ int16_t Median_Filter_Of_3(int16_t a, int16_t b, int16_t c)
 }
 
 
-// 最大窗口大小（根据内存调整，建议为2的幂以便用移位优化）
-#define ARITH_MAX_WINDOW  8
+
 
 /**
  * 算术平均滤波（滑动平均）
@@ -124,6 +122,9 @@ int16_t Arithmetic_Filter(int16_t new_sample)
     // 若希望四舍五入，可改为 (sum + cnt/2) / cnt
     return (int16_t)(sum / cnt);
 }
+
+
+
 
 
 /**
@@ -161,5 +162,49 @@ int16_t HighPass_Filter(int16_t new_sample, uint16_t alpha)
     int16_t highpass = new_sample - (int16_t)lowpass;
     return highpass;
 }
+
+
+// 窗口大小（建议 2~8，权重大小需与窗口匹配）
+#define WAVG_WINDOW_SIZE  4
+
+// 权重系数（最新 -> 最旧，总和应为 2 的幂或任意值，这里为 10）
+static const uint8_t weights[WAVG_WINDOW_SIZE] = {4, 3, 2, 1};
+
+// 权重前缀和：prefix[i] = weights[0] + ... + weights[i-1]
+static const uint8_t weight_prefix[WAVG_WINDOW_SIZE + 1] = {0, 4, 7, 9, 10};
+
+/**
+ * 加权递推平均滤波（在线滑动窗口）
+ * @param new_sample  新采集的样本值
+ * @return            加权平均输出
+ */
+int16_t WeightedAverage_Filter(int16_t new_sample)
+{
+    static int16_t buffer[WAVG_WINDOW_SIZE];
+    static uint8_t idx = 0;
+    static uint8_t filled = 0;
+    int32_t sum_wx = 0;
+    uint8_t i;
+
+    // 1. 存入新样本到环形缓冲区
+    buffer[idx] = new_sample;
+    idx = (idx + 1) % WAVG_WINDOW_SIZE;
+    if (filled < WAVG_WINDOW_SIZE) {
+        filled++;
+    }
+
+    // 2. 加权求和：从最新样本到最旧样本
+    for (i = 0; i < filled; i++) {
+        // 计算样本位置：最新样本在 (idx-1) 处，依次向前
+        uint8_t pos = (idx - 1 - i + WAVG_WINDOW_SIZE) % WAVG_WINDOW_SIZE;
+        sum_wx += (int32_t)buffer[pos] * weights[i];
+    }
+
+    // 3. 整数除法（四舍五入）
+    uint8_t sum_w = weight_prefix[filled];
+    int16_t output = (int16_t)((sum_wx + sum_w / 2) / sum_w);
+    return output;
+}
+
 
 

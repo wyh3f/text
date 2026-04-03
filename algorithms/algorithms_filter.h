@@ -49,6 +49,12 @@ int16_t Median_Filter_Of_3(int16_t a, int16_t b, int16_t c);
  */
 int16_t Arithmetic_Filter(int16_t new_sample);
 
+/**
+ * 加权递推平均滤波（在线滑动窗口）
+ * @param new_sample  新采集的样本值
+ * @return            加权平均输出
+ */
+int16_t WeightedAverage_Filter(int16_t new_sample);
 
 /**
  * 一阶低通滤波器（定点整数实现）
