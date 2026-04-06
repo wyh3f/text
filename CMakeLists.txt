@@ -9,7 +9,9 @@ add_executable(text main.c
         algorithms/algorithms_queue.c
         algorithms/algorithms_queue.h
         algorithms/algorithms_stack.c
-        algorithms/algorithms_stack.h)
+        algorithms/algorithms_stack.h
+        algorithms/algorithms_linked_list.c
+        algorithms/algorithms_linked_list.h)
 
 target_include_directories(text PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
