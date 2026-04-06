@@ -8,7 +8,7 @@
 int main(void) {
     printf("Hello, World!\n");
     printf("how are you?\n");
-
+    test_queue();
     return 0;
 }
 
