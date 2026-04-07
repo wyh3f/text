@@ -13,11 +13,11 @@ extern "C" {
  * 队列句柄
  */
 typedef struct queue_element {
+    void* queue_data_addr;      //指向队列的实际内存地址
     uint16_t queue_det_num;     //队列的元素个数
     uint16_t queue_det_size;    //队列的元素大小
     uint16_t queue_head;        //队列首
     uint16_t queue_tail;        //队列尾
-    void* queue_data_addr;      //指向队列的实际内存地址
 }queue;
 
 

@@ -113,6 +113,7 @@ void test_queue(void) {
     dequeue(&q,(void*)&a_buf_begins_2);
     printf("queue_num %d,out %f\n",queue_free_slots(&q),a_buf_begins_2);
     destroy_queue(&q);
+    printf("Queue test ends.\n");
 }
 
 
