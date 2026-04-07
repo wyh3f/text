@@ -222,8 +222,8 @@ int8_t alter_linked_list_node(const linked_list* l, uint16_t dat_num, uint16_t d
         return -1;
     }
     memcpy(buf->linked_list_data_addr, alter_data, new_size);
-    buf->linked_list_dat_num = alter_dat_num;   // 添加
-    buf->linked_list_det_size = alter_det_size; // 添加
+    // buf->linked_list_dat_num = alter_dat_num;   // 添加
+    // buf->linked_list_det_size = alter_det_size; // 添加
     return 0;
 }
 
