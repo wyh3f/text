@@ -11,6 +11,7 @@ int main(void) {
     test_queue();
     test_linked_list();
     test_analog_waveform();
+    test_all_filters();
     return 0;
 }
 
