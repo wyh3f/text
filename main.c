@@ -1,8 +1,17 @@
 #include <stdio.h>
+#include <string.h>
+#include <stdio.h>
+#include <stdarg.h>
+#include <stdlib.h>
+#include <math.h>
+#include "stdbool.h"
 #include <algorithms/algorithms_filter.h>
 #include <algorithms/algorithms_queue.h>
 #include <algorithms/algorithms_linked_list.h>
 #include <algorithms/algorithms_analog_waveform.h>
+
+
+
 
 
 int main(void) {
@@ -12,6 +21,13 @@ int main(void) {
     test_linked_list();
     test_analog_waveform();
     test_all_filters();
+
+
+
+
+
+
+
     return 0;
 }
 

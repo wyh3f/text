@@ -13,7 +13,9 @@ add_executable(text main.c
         algorithms/algorithms_linked_list.c
         algorithms/algorithms_linked_list.h
         algorithms/algorithms_analog_waveform.c
-        algorithms/algorithms_analog_waveform.h)
+        algorithms/algorithms_analog_waveform.h
+        algorithms/algorithms_CRC16.c
+        algorithms/algorithms_CRC16.h)
 
 target_include_directories(text PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 

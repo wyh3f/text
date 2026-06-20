@@ -197,10 +197,7 @@ int16_t WeightedAverage_Filter_Update(WeightedAverage_Filter_CTX *ctx, int16_t n
  */
 void test_all_filters(void)
 {
-    printf("========================================\n");
-    printf("数字滤波算法测试程序\n");
-    printf("========================================\n");
-
+    printf("\n========================================\n");
     /*==================== 1. 限幅滤波测试 ====================*/
     printf("---------------\n");
     printf("test_limit_filter\n");
