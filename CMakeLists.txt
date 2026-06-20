@@ -15,7 +15,14 @@ add_executable(text main.c
         algorithms/algorithms_analog_waveform.c
         algorithms/algorithms_analog_waveform.h
         algorithms/algorithms_CRC16.c
-        algorithms/algorithms_CRC16.h)
+        algorithms/algorithms_CRC16.h
+        algorithms/PID/PID1.c
+        algorithms/PID/PID1.h
+        algorithms/PID/EPID.c
+        algorithms/PID/EPID.h
+        algorithms/PID/PID.c
+        algorithms/PID/PID.h
+)
 
 target_include_directories(text PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
